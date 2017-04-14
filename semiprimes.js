@@ -12,10 +12,21 @@ function semiPrime(number) {
 
   for(var i = 2; i <= highestFactor; i++) {
     if((number % i) === 0) {
-      res.push(i);
-      res.push(number / i);
+      if(primeChecker(i) && primeChecker(number/i)) {
+        res.push(i);
+        res.push(number / i);
+      }
       break;
     }
   }
-  return res;
+  return res.length === 2 ? res : "Number is not a semiprime";
+}
+
+function primeChecker(number) {
+  if(number === 2) return true;
+  var highestFactor = Math.ceil(Math.sqrt(number));
+  for(var i = 2; i <= highestFactor; i++) {
+    if(number % i === 0) return false;
+  }
+  return true;
 }
