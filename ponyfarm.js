@@ -24,5 +24,12 @@ Array.prototype.concatAll = function() {
 }
 
 function getPonyAllergies (ponies, ownerEmail) {
-  
+  return Object.keys(
+    ponies.filter(p => p.email === ownerEmail)
+    .map(getProp("allergies"))
+    .concatAll()
+    .reduce((list, allergy) => {
+      list[allergy] = true;
+      return list;
+    }, {})).sort();
 }
