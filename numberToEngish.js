@@ -8,6 +8,7 @@ function numberToEnglish(number) {
   ntw = (num) => numbersToWords[num.toString()];
   numbersToPlace = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion'];
 
+  // Parse numbers less than 100
   function tens(number) {
     if(number === 0) return '';
     if(number < 21) return ntw(number);
@@ -17,6 +18,7 @@ function numberToEnglish(number) {
     return ten + one;
   }
 
+  // Parse 3 decimal places
   function parseBlock(number, placeIndex) {
     if(number === 0) return '';
     var block = '';
@@ -33,6 +35,7 @@ function numberToEnglish(number) {
   var toReturn = '';
   var placeIndex = -1;
 
+  // Loop through 3 at a time
   for(var i = number.toString().length - 1; i >= 0; i -= 3) {
     if(i < 2) toReturn = parseBlock(Number(number.toString().slice(0, i + 1)), placeIndex) + ' ' + toReturn;
     else toReturn = parseBlock(Number(number.toString().slice(i - 2, i + 1)), placeIndex) + ' ' + toReturn;
