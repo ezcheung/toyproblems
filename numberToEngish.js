@@ -16,7 +16,17 @@ function numberToEnglish(number) {
     one = one ? '-' + ntw(one) : '';
     return ten + one;
   }
+
   function parseBlock(number, placeIndex) {
-    var hundreds = ntw(Math.floor(number / 100)) + ' hundred ';
+    if(number === 0) return '';
+    var block = '';
+    var small = tens(number % 100);
+    if(number < 100) block = small;
+    else {     
+      var hundreds = ntw(Math.floor(number / 100)) + ' hundred';
+      if(small) block = hundreds + ' ' + small;
+      else block = hundreds;
+    }
+    return placeIndex !== -1 ? block + ' ' + numbersToPlace[placeIndex] : block;
   }
 }
