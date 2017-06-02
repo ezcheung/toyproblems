@@ -10,7 +10,7 @@ function numberToEnglish(number) {
 
   function tens(number) {
     if(number === 0) return '';
-    if(number < 21) return ntw(number) + " " + numbersToPlace[placeIndex];
+    if(number < 21) return ntw(number);
     var ten = ntw(Math.floor(number / 10) * 10);
     var one = number % 10;
     one = one ? '-' + ntw(one) : '';
