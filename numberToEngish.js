@@ -29,4 +29,14 @@ function numberToEnglish(number) {
     }
     return placeIndex !== -1 ? block + ' ' + numbersToPlace[placeIndex] : block;
   }
+
+  var toReturn = '';
+  var placeIndex = -1;
+
+  for(var i = number.toString().length - 1; i >= 0; i -= 3) {
+    if(i < 2) toReturn = parseBlock(Number(number.toString().slice(0, i + 1)), placeIndex) + ' ' + toReturn;
+    else toReturn = parseBlock(Number(number.toString().slice(i - 2, i + 1)), placeIndex) + ' ' + toReturn;
+    placeIndex += 1;
+  }
+  return toReturn.trim();
 }
