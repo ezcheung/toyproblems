@@ -54,18 +54,46 @@ function damagedOrSunk (board, attacks){
   //convert attack coordinates to array indexes
   var atx = attacks.map(c => [board.length - c[1], c[0] - 1]);
 
-  function shipCoords() {
-    var coords = {};
+  function shipLengths() {
+    var lengths = {};
     for(var y = 0; y < board.length; y++) {
       for(var x = 0; x < board[y].length; x++) {
         if(board[y][x] !== 0){
-          if(!coords[board[y][x]]) {
-            coords[board[y][x]] = [];
+          if(!lengths[board[y][x]]) {
+            lengths[board[y][x]] = 0;
           }
-          coords[board[y][x]].push([y, x]);
+          lengths[board[y][x]] += 1;
         }
       }
     }
-    return coords;
+    return lengths;
   }
+
+  var shipLens = shipLengths();
+  var hits = {};
+
+  for(var a = 0; a < atx.length; a++) {
+    var attack = board[atx[a][0]][atx[a][1]];
+    if(attack) {
+      if(hits[attack] === undefined) hits[attack] = 0;
+      hits[attack] += 1;
+    }
+  }
+
+  var returnObj = {sunk: 0, damaged: 0, notTouched: 0, points: 0};
+  for(s in shipLens) {
+    if(hits[s] === undefined) {
+      returnObj.notTouched += 1;
+      returnObj.points -= 1;
+    }
+    else if(hits[s] < shipLens[s]) {
+      returnObj.damaged += 1;
+      returnObj.points += 0.5;
+    }
+    else {
+      returnObj.sunk += 1;
+      returnObj.points += 1;
+    }
+  }
+  return returnObj;
 }
