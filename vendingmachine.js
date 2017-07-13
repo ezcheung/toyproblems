@@ -35,34 +35,49 @@ VendingMachine.prototype.vending = function(price, credit) {
   }
 
   if(paid < price) return credit;
-  if(paid === price) return returnCoins;
+  for(let i in credit) {
+    this.coins[i] += credit[i];
+  }
+  if(paid === price) {
+    return returnCoins;
+  }
   
   let change = paid - price;
   let validCoins = Object.keys(this.coins).sort((a, b) => b-a);
   let coinStack = [];
-  function changeMake(left=change, closestStack=[], closest = change) {
+  var _this = this;
+  closestStack = [];
+  closest = change;
+  function changeMake(left=change) {
     if(left === 0) return true;
     for(let c = 0; c < validCoins.length; c++) {
       if(left >= validCoins[c]) {
-        coinStack.push(validCoins[c]);
-        this.coins[validCoins[c]] -= 1;
-        if(changeMake(left - validCoins[c], closestStack, closest) === true){
-          return true;
+        if(_this.coins[validCoins[c]]) {          
+          coinStack.push(validCoins[c]);
+          _this.coins[validCoins[c]] -= 1;
+          if(changeMake(left - validCoins[c]) === true){
+            return true;
+          }
+          let value = change - coinStack.reduce((a, e) => Number(a)+Number(e), 0);
+          if(value < closest) {
+            closest = value;
+            closestStack = coinStack.slice();
+          }
+          let popped = coinStack.pop();
+          _this.coins[popped] += 1;
         }
-        let value = coinStack.reduce((a, e) => a+e, 0);
-        if(value < closest) {
-          closest = value;
-          closestStack = coinStack.slice();
-        }
-        let popped = coinStack.pop();
-        this.coins[popped] += 1;
       }
     }
     return false;
   }
-  console.log("Coin Stack: ", coinStack);
+  let notExact = false;
+  if(changeMake() === false) {
+    coinStack = closestStack;
+    notExact = true;
+  }
   for(let i = 0; i < coinStack.length; i++) {
     if(returnCoins[coinStack[i]] === undefined) returnCoins[coinStack[i]] = 0;
+    if(notExact) this.coins[coinStack[i]] -= 1;
     returnCoins[coinStack[i]] += 1;
   }
   return returnCoins;
