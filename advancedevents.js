@@ -17,3 +17,27 @@ handler functions can subscribe and unsubscribe handlers, but the changes should
 subscribe, unsubscribe and emit are the only public properties that are allowed on event objects (apart from Object.prototype methods)
 */
 
+function Event() {
+  var methodList = [];
+  this.subscribe = function () {
+    for(let i = 0; i < arguments.length; i++) {
+      if(typeof arguments[i] === 'function') methodList.push(arguments[i]);
+    }
+    return methodList;
+  }
+
+  this.unsubscribe = function() {
+    for(let i = 0; i < arguments.length; i++) {
+      let index = methodList.lastIndexOf(arguments[i]);
+      if(index >= 0) methodList.splice(index, 1);
+    }
+    return methodList;
+  }
+
+  this.emit = function() {
+    let current = methodList.slice();
+    for(let i = 0; i < current.length; i++) {
+      current[i].call(this, ...arguments);
+    }
+  }
+}
