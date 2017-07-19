@@ -8,9 +8,26 @@
 
 // We need a function to collect these numbers, that may receive two integers a, b that defines the range [a, b] (inclusive) and outputs a list of the sorted numbers in the range that fulfills the property described above.
 
+import java.util.List;
+import java.util.ArrayList;
 class SumDigPower {
     
     public static List<Long> sumDigPow(long a, long b) {
-        // your code
+      List<Long> lst = new ArrayList<Long>();
+
+      for(long i = a; i <= b; i++) {
+        String digits = i + "";
+        long total = 0;
+        long digsLeft = i;
+        for(int j = digits.length() - 1; j >= 0; j--) {
+          long dig = digsLeft % 10;
+          long pow = (long)Math.pow(dig, j + 1);
+          total += pow;
+          digsLeft = digsLeft / 10;
+        }
+        if(total == i) lst.add(i);
+      }
+
+      return lst;
     }
 }
