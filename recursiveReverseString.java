@@ -11,6 +11,7 @@
 public class Reverse {
 
     public String reverse(String str) {
-       // your code here
+       if(str.length() == 1) return str;
+       else return str.charAt(str.length() - 1) + reverse(str.substring(0, str.length() - 1));
     }
 }
