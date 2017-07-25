@@ -9,7 +9,16 @@
 
 public class HumanReadableTime {
   public static String makeReadable(int seconds) {
-    // Do something
-    return Integer.toString(seconds);
+    int hours = seconds / 3600;
+    int minutes = (seconds % 3600) / 60;
+    int secs = seconds % 60;
+    String h = hours + '';
+    if(h.length() < 2) h = '0' + h;
+    String m = minutes + '';
+    if(m.length() < 2) m = '0' + m;
+    String s = secs + '';
+    if(s.length() < 2) s = '0' + s;
+    String time = h + ":" + m + ":" + s;
+    return time;
   }
 }
