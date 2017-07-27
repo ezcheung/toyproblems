@@ -4,8 +4,9 @@
 // Only worry about the following format:
 // (123) 456-7890 (don't forget the space after the close parentheses) 
 
+import java.util.regex.*;
 public class Kata {
   public static boolean validPhoneNumber(String phoneNumber) {
-    // TODO: Return whether phoneNumber is in the proper form
+    return Pattern.matches("[(]\\d\\d\\d[)] \\d\\d\\d-\\d\\d\\d\\d", phoneNumber);
   }
 }
