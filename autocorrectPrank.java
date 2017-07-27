@@ -12,9 +12,19 @@
 // "u" at the beginning, middle, or end of a string, but NOT part of a word
 // "you" but NOT as part of another word like youtube or bayou
 
+import java.util.regex.*;
 public class Kata {
   public static String autocorrect(String input) {
-    // your code here
-    return ""; // "corrected" input
+    String[] words = input.split(" ");
+    String corrected = "";
+    for(int i = 0; i < words.length; i++) {
+      corrected += " ";
+      if(Pattern.matches("\\p{Punct}*you+\\p{Punct}*|\\p{Punct}*u\\p{Punct}*", words[i].toLowerCase())) {
+        if(words[i].toLowerCase().contains("you")) corrected += words[i].toLowerCase().replaceAll("you+", "your sister");
+        else corrected += words[i].toLowerCase().replaceAll("u", "your sister");
+      }
+      else corrected += words[i];
+    }
+    return corrected.trim();
   }
 }
