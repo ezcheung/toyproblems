@@ -18,16 +18,24 @@ function parseMolecule(formula) {
   var matchBracks = /\[([^\]]+)]/;
 }
 
-function isLC(letter) {
-  return /[a-z]/.test(letter);
+function isUC(letter) {
+  return /[A-Z]/.test(letter);
 }
 
 function parseBlock(stringLeft, startingChar) {
-  let matchingChars = {'(': ')', '[': ']'};
+  let startChars = {'(': ')', '[': ']'};
   let endChar = "";
+  let block = {};
 
-  if(startingChar) endChar = matchingChars[startingChar];
+  if(startingChar) endChar = startChars[startingChar];
 
+  let currElement = "";
+  for(let i = 0; i < stringLeft; i++) {
+    let chr = stringLeft[i];
+    if(startChars[chr]) {
+      block = mergeObjs(block, parseBlock(stringLeft.slice(i), chr)); //recursive call
+    } else if(isUC(chr))
+  }
 }
 
 function mergeObjs(obj1, obj2) {
