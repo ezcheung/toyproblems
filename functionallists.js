@@ -4,9 +4,11 @@ function EmptyList() {}
 EmptyList.prototype = new List();
 EmptyList.prototype.constructor = EmptyList;
 
-EmptyList.prototype.toString = function() { /* implement this */ };
-EmptyList.prototype.isEmpty = function() { /* implement this */ };
-EmptyList.prototype.length = function() { /* implement this */ };
+EmptyList.prototype.toString = function() { return '()' };
+
+EmptyList.prototype.isEmpty = function() { return true; };
+
+EmptyList.prototype.length = function() { return 0 };
 EmptyList.prototype.push = function(x) { /* implement this */ };
 EmptyList.prototype.remove = function(x) { /* implement this */ };
 EmptyList.prototype.append = function(xs) { /* implement this */ };
