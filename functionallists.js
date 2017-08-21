@@ -9,11 +9,25 @@ EmptyList.prototype.toString = function() { return '()' };
 EmptyList.prototype.isEmpty = function() { return true; };
 
 EmptyList.prototype.length = function() { return 0 };
-EmptyList.prototype.push = function(x) { /* implement this */ };
-EmptyList.prototype.remove = function(x) { /* implement this */ };
-EmptyList.prototype.append = function(xs) { /* implement this */ };
 
-function ListNode(value, next) { /* implement this */ }
+EmptyList.prototype.push = function(x) { 
+  return ListNode(x, new EmptyList());
+};
+
+EmptyList.prototype.remove = function(x) { return this; };
+
+EmptyList.prototype.append = function(xs) { return xs; };
+
+function ListNode(value, next) {
+  let val = value;
+  let next = next;
+  let node = {};
+  node.getVal = () => val;
+  node.getNext = () => next;
+
+  return node;
+}
+
 ListNode.prototype = new List();
 ListNode.prototype.constructor = ListNode;
 ListNode.prototype.isEmpty = function() { /* implement this */ };
