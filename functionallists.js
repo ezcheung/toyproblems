@@ -30,13 +30,39 @@ function ListNode(value, next) {
 
 ListNode.prototype = new List();
 ListNode.prototype.constructor = ListNode;
-ListNode.prototype.isEmpty = function() { /* implement this */ };
 
-ListNode.prototype.toString = function() { /* implement this */ };
+ListNode.prototype.isEmpty = function() {return false;};
 
-ListNode.prototype.head = function() { /* implement this */ };
-ListNode.prototype.tail = function() { /* implement this */  };
-ListNode.prototype.length = function() { /* implement this */ };
+ListNode.prototype.toString = function() {
+  let current = this;
+  let str = '(';
+
+  while(!current.isEmpty()) {
+    str += current.getVal() + ' ';
+    current = current.getNext();
+  }
+
+  str = str.slice(0, str.length() - 2);
+  str += ')';
+
+  return str;
+};
+
+ListNode.prototype.head = function() { return this; };
+
+ListNode.prototype.tail = function() {
+
+};
+
+ListNode.prototype.length = function() {
+  let current = this;
+  let length = 0;
+  while(!current.isEmpty()) {
+    length += 1;
+    current = current.getNext();
+  }
+  return length;
+};
 ListNode.prototype.push = function(x) { /* implement this */ };
 ListNode.prototype.remove = function(x) { /* implement this */ };
 ListNode.prototype.append = function(xs) { /* implement this */ };
