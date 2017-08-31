@@ -21,3 +21,14 @@ Your task is to complete the method provided and return the number of years 'Y' 
 
 Assumptions : Assume that Desired Principal 'D' is always greater than the initial principal, however it is best to take into consideration that if the Desired Principal 'D' is equal to Principal 'P' this should return 0 Years.
 */
+
+function calculateYears(principal, interest, tax, desired) {
+  let current = principal;
+  let years = 0;
+  tax = 1-tax;
+  while(current < desired) {
+    years += 1;
+    current = current + (current * interest * tax);
+  }
+  return years;
+}
